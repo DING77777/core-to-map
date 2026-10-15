@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mineral Change Viewer</title>
+<link rel="stylesheet" href="viewer.css">
+</head>
+<body>
+<header>
+  <h1>Mineral change viewer</h1>
+  <p>SWIR and TIR mineral groups metre by metre, with candidate spectral changes. A candidate is a place to look, not a confirmed contact.</p>
+</header>
+<main>
+  <aside>
+    <label class="field">Holes
+      <input id="filter" type="search" placeholder="Filter by name">
+    </label>
+    <div id="holes" class="holes"></div>
+    <p class="hint">Tick up to six holes to compare. Along-hole depth is not the same layer in different holes.</p>
+  </aside>
+  <section class="work">
+    <div class="controls">
+      <label class="field small depth-control">From (m)<input id="from" type="number" step="1"></label>
+      <label class="field small depth-control">To (m)<input id="to" type="number" step="1"></label>
+      <button id="fit" class="depth-control" type="button">Whole hole</button>
+      <label class="field">Sensitivity
+        <select id="beta">
+          <option value="1">More lines</option>
+          <option value="2" selected>Tested default</option>
+          <option value="4">Fewer lines</option>
+          <option value="8">Fewest lines</option>
+        </select>
+      </label>
+      <label class="field">Shortest segment
+        <select id="min">
+          <option value="2" selected>2 m (tested default)</option>
+          <option value="3">3 m</option>
+          <option value="5">5 m</option>
+        </select>
+      </label>
+      <label class="check"><input id="showlog" type="checkbox" checked> Company-log changes</label>
+      <button id="download" type="button">Download table</button>
+    </div>
+    <p id="settingsnote" class="note"></p>
+    <p class="note">Main mineral groups · relative spectral proportions, not mineral mass %. Each region shows its six leading groups for that hole; the remainder is grey. SWIR and TIR stay separate. Blank intervals have no usable coverage.</p>
+    <div id="groups" class="legend groups"></div>
+    <p id="panelhint" class="hint" hidden>Scroll sideways to see the other hole panels.</p>
+    <div id="panels" class="panels"></div>
+    <div id="legend" class="legend"></div>
+    <h2>Candidate changes in view</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Hole</th><th>Depth (m)</th><th>Largest changes (above → below)</th><th>Stable</th><th>Log change within 1 m</th></tr></thead>
+      <tbody id="list"></tbody>
+    </table></div>
+  </section>
+</main>
+<div id="tip" class="tip" hidden></div>
+<script src="data/index.js"></script>
+<script src="viewer-data.js"></script>
+<script src="viewer.js"></script>
+</body>
+</html>

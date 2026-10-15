@@ -1,0 +1,3 @@
+# Browsing saved results uses the Python 3.12+ standard library.
+# Required only for calculating new mineral-change results:
+numpy>=1.26

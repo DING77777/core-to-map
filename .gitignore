@@ -1,0 +1,30 @@
+# Local inputs
+/data/**
+!/data/README.md
+!/data/inbox/
+/data/inbox/**
+!/data/inbox/README.md
+
+# Generated mineral-change data and research results
+/code/analysis/viewer/data/**
+!/code/analysis/viewer/data/README.md
+/code/analysis/results/**
+!/code/analysis/results/README.md
+/code/analysis/output/
+/code/analysis/packages/
+/code/analysis/work/
+/code/work/
+/code/data/
+/code/static/basemap.json
+
+# Environment and editor files
+__pycache__/
+*.py[cod]
+!/runtime/**/*.pyd
+.venv/
+venv/
+.pytest_cache/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "data_included_in_code_zip": false,
+  "summaries": [
+    {
+      "hole_id": "09THD028",
+      "relative_path": "inbox/SM_09THD028.csv",
+      "sha256": "09c505f6934e53e54b97de73e90e173790bfdc1f2db75ebcf46631f38cbbc23c",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_09THD028.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_09THD028.csv"
+    },
+    {
+      "hole_id": "12DHDD0002",
+      "relative_path": "inbox/SM_12DHDD0002.csv",
+      "sha256": "2fc6910a73b7a2c6be7aa46c25fc5b162294c1c1500adf08fb0b7ea6531e9fbb",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_12DHDD0002.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_12DHDD0002.csv"
+    },
+    {
+      "hole_id": "15BRDD001",
+      "relative_path": "inbox/SM_15BRDD001.csv",
+      "sha256": "d49da7140d8ffa171cf7480305d1afd91c5c995b192a6366be11d5a09779800f",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_15BRDD001.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_15BRDD001.csv"
+    },
+    {
+      "hole_id": "17SRDD0004",
+      "relative_path": "inbox/SM_17SRDD0004.csv",
+      "sha256": "b608c0e36121798436ab52e361197aa10135d7eb2a40875a9f324e80ae30d0dd",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_17SRDD0004.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_17SRDD0004.csv"
+    },
+    {
+      "hole_id": "20CFRCD003",
+      "relative_path": "inbox/SM_20CFRCD003.csv",
+      "sha256": "1791f7ab4c63a7c0078103e1db765fa1e6603af117768da71027af7e2341543f",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_20CFRCD003.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_20CFRCD003.csv"
+    },
+    {
+      "hole_id": "22ACHD0001",
+      "relative_path": "inbox/SM_22ACHD0001.csv",
+      "sha256": "ea325bd16bcf559faa92a2dea96ef4235b82d2db0c13c173341626584bedfa6c",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_22ACHD0001.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_22ACHD0001.csv"
+    },
+    {
+      "hole_id": "AED022",
+      "relative_path": "inbox/SM_AED022.csv",
+      "sha256": "a50886f4202b938b0ef0ddd13e42f30a1fe8ef4a19a8e559faac7b8cec6e991d",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_AED022.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_AED022.csv"
+    },
+    {
+      "hole_id": "AMDD003",
+      "relative_path": "inbox/SM_AMDD003.csv",
+      "sha256": "5f04772c5b1395e901df13b0fee8d6cb8f2eb038134d3dec2646a5dfc5890d10",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_AMDD003.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_AMDD003.csv"
+    },
+    {
+      "hole_id": "BBDD0011",
+      "relative_path": "inbox/SM_BBDD0011.csv",
+      "sha256": "45288856fef5bbd743fc91dd60e77c8ee2dccda162a35187d324f72649b9e88e",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_BBDD0011.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_BBDD0011.csv"
+    },
+    {
+      "hole_id": "BCMH0072",
+      "relative_path": "inbox/SM_BCMH0072.csv",
+      "sha256": "fe3dd5b120d356f9d496299c7b7ec7ca844414f91c810409e8ce3b427dcd630a",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_BCMH0072.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_BCMH0072.csv"
+    },
+    {
+      "hole_id": "BNRD023",
+      "relative_path": "inbox/SM_BNRD023.csv",
+      "sha256": "645ac954dc60ada5c17cf83ad8831c4dad8f37d18a36b28138d949946e2820a4",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_BNRD023.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_BNRD023.csv"
+    },
+    {
+      "hole_id": "CCUD001",
+      "relative_path": "inbox/SM_CCUD001.csv",
+      "sha256": "9d4603c8badf0e9e672de9ca006404946e2500aad3c9456e4994938b5b667945",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_CCUD001.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_CCUD001.csv"
+    },
+    {
+      "hole_id": "CMDD001",
+      "relative_path": "nvcl_wa/CMDD001/supporting/SM_CMDD001.csv",
+      "sha256": "839e89f496a2d01919c37c77e6fac6968e51868d70a75792072012fa27e3d4bb",
+      "url": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_CMDD001.csv"
+    },
+    {
+      "hole_id": "CMDD002",
+      "relative_path": "nvcl_wa/CMDD002/supporting/SM_CMDD002.csv",
+      "sha256": "184f516414a92c87faedcb03659d9e05aa29145e445e6d50735fdd601444a036",
+      "url": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_CMDD002.csv"
+    },
+    {
+      "hole_id": "CYDD0220",
+      "relative_path": "inbox/SM_CYDD0220.csv",
+      "sha256": "98c409ffd1a0c27e081bc5479cf197572d623850c44632c29bb8888c7edab2f8",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_CYDD0220.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_CYDD0220.csv"
+    },
+    {
+      "hole_id": "DRDD380",
+      "relative_path": "new_holes_20261015/SM_DRDD380.csv",
+      "sha256": "c300d430583094ce915eac868f9d37f7dc1c408a6df528fb664687d09c1cb11e",
+      "url": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_DRDD380.csv"
+    },
+    {
+      "hole_id": "EHD001",
+      "relative_path": "new_holes_20261015/SM_EHD001.csv",
+      "sha256": "41219905de15fcbb627687c98c82414149c0ea4d3b9ab36ae3c0112c648d4cfb",
+      "url": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_EHD001.csv"
+    },
+    {
+      "hole_id": "HCRD0051",
+      "relative_path": "inbox/SM_HCRD0051.csv",
+      "sha256": "473cd88676ca2dcc7c9276e09a2ba03447ee5c47d99ef3a0e9aede97590b92c4",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_HCRD0051.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_HCRD0051.csv"
+    },
+    {
+      "hole_id": "JLS14DD002",
+      "relative_path": "inbox/SM_JLS14DD002.csv",
+      "sha256": "45f52df659267a676a964a2fc144c25be62cbd3fc475113b09d0a0082b6f85eb",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_JLS14DD002.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_JLS14DD002.csv"
+    },
+    {
+      "hole_id": "KDD001",
+      "relative_path": "inbox/SM_KDD001.csv",
+      "sha256": "a52d4c2207a0469a456f2d0be8d941f7d9403fb5c899d37af99c361b57b3b6ac",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_KDD001.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_KDD001.csv"
+    },
+    {
+      "hole_id": "LJM-D007",
+      "relative_path": "inbox/SM_LJM-D007.csv",
+      "sha256": "4ae1ff3189749f97149d6bedbeceb2d117daf093159217f31b59bd1f903dc020",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_LJM-D007.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_LJM-D007.csv"
+    },
+    {
+      "hole_id": "MDDH0003",
+      "relative_path": "inbox/SM_MDDH0003.csv",
+      "sha256": "c266473415b357027cdc8e74ae9c3b05152a82ab4f1bd41c5c2c00d86e20afb8",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_MDDH0003.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_MDDH0003.csv"
+    },
+    {
+      "hole_id": "MFED069",
+      "relative_path": "inbox/SM_MFED069.csv",
+      "sha256": "c32089ce7b7768d9a23610dca4c944bd632c6fa77e00c7985818b9b40f460fba",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_MFED069.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_MFED069.csv"
+    },
+    {
+      "hole_id": "MG19-003",
+      "relative_path": "inbox/SM_MG19-003.csv",
+      "sha256": "14ba6c67341dbb069dbc688d65f724040f4de3ec7b0450e15e8fd584bea6a7e0",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_MG19-003.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_MG19-003.csv"
+    },
+    {
+      "hole_id": "MNDD0003",
+      "relative_path": "inbox/SM_MNDD0003.csv",
+      "sha256": "20d545ef3b2b0373d163459f124923aba8abe13d098af6318785f4d2007bd033",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_MNDD0003.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_MNDD0003.csv"
+    },
+    {
+      "hole_id": "MOD7",
+      "relative_path": "inbox/SM_MOD7.csv",
+      "sha256": "b768b4bac78fe5cf54524157d43ab9a31aaae691df1b4d3150e37e89b7ac96e5",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_MOD7.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_MOD7.csv"
+    },
+    {
+      "hole_id": "MVRC041D",
+      "relative_path": "inbox/SM_MVRC041D.csv",
+      "sha256": "4fc5b1f0f3c8257acca5599c84f334abc0b7cc8b86a5e9e4b1630cdf5042df4b",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_MVRC041D.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_MVRC041D.csv"
+    },
+    {
+      "hole_id": "NDD17002",
+      "relative_path": "inbox/SM_NDD17002.csv",
+      "sha256": "e635d89dee391c44dd14bba3066bfc11c8295b98dcce96a5c1098af70e8f385c",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_NDD17002.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_NDD17002.csv"
+    },
+    {
+      "hole_id": "PLRCD001",
+      "relative_path": "inbox/SM_PLRCD001.csv",
+      "sha256": "7b8d26d59aae8a5350f9e45eaa4e8f0ae48b093ae245edb85293453c0799e66d",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_PLRCD001.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_PLRCD001.csv"
+    },
+    {
+      "hole_id": "RAGD039",
+      "relative_path": "inbox/SM_RAGD039.csv",
+      "sha256": "8e220a66cb1160c5702a68b4523bae9e714407fc46802a5c2d1338820a5721a8",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_RAGD039.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_RAGD039.csv"
+    },
+    {
+      "hole_id": "RBDD008",
+      "relative_path": "new_holes_20261015/SM_RBDD008.csv",
+      "sha256": "dbf7ccf03cd944057a6a93c3610fafa3cacea153594ded221ba50581e235075a",
+      "url": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_RBDD008.csv"
+    },
+    {
+      "hole_id": "RRLGDDD063",
+      "relative_path": "inbox/SM_RRLGDDD063.csv",
+      "sha256": "f53e89e6625923c4a3844f51218ca37251fe42dab8151507a3499c957336d589",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_RRLGDDD063.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_RRLGDDD063.csv"
+    },
+    {
+      "hole_id": "SCDD002",
+      "relative_path": "inbox/SM_SCDD002.csv",
+      "sha256": "7402dffe74c734cde9b50f9ed230652c81b0f5266b69d49df1ff06e0d2fbd7e2",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_SCDD002.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_SCDD002.csv"
+    },
+    {
+      "hole_id": "SCDD003",
+      "relative_path": "inbox/SM_SCDD003.csv",
+      "sha256": "a71dd8c44f216a9ee1cebeb7a26161980c92492b2118d77c4b22a00c8eb537d1",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_SCDD003.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_SCDD003.csv"
+    },
+    {
+      "hole_id": "SGD001",
+      "relative_path": "inbox/SM_SGD001.csv",
+      "sha256": "f80fc6cf50d95b35c83d80420d60b90a56ce256df3108ee1b16350104f973a1f",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_SGD001.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_SGD001.csv"
+    },
+    {
+      "hole_id": "TBDD126",
+      "relative_path": "cluster_tbdd_20261015/SM_TBDD126.csv",
+      "sha256": "595543f37b59b06196c913a5e09a77413a6695c131be9aab9248010140c31e7a",
+      "url": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_TBDD126.csv"
+    },
+    {
+      "hole_id": "TBDD127",
+      "relative_path": "cluster_tbdd_20261015/SM_TBDD127.csv",
+      "sha256": "2ad40360e857c09f4ade65e580d53c931a7deb00f71a1dcd4e4d154914cb5642",
+      "url": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_TBDD127.csv"
+    },
+    {
+      "hole_id": "TBDD128",
+      "relative_path": "cluster_tbdd_20261015/SM_TBDD128.csv",
+      "sha256": "37e25ebe6fe12dd86f082ac25fe024646748d79381c49dd27446544bdf938429",
+      "url": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_TBDD128.csv"
+    },
+    {
+      "hole_id": "TUR13DD003",
+      "relative_path": "inbox/SM_TUR13DD003.csv",
+      "sha256": "ee8d4b75e0a16e0a6efd1e9513ede37cd9bbb4038b0f709ada406ca2f47ab1fd",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_TUR13DD003.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_TUR13DD003.csv"
+    },
+    {
+      "hole_id": "TUR13DD004",
+      "relative_path": "inbox/SM_TUR13DD004.csv",
+      "sha256": "bada68b8b9341ae5d2dc9749a254357f7218652931e83585d35a300ad273f85d",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_TUR13DD004.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_TUR13DD004.csv"
+    },
+    {
+      "hole_id": "UGD4107",
+      "relative_path": "inbox/SM_UGD4107.csv",
+      "sha256": "52cd11b2453256d4d2d76cc2b6eb4c508730da9a359200ea738fd6a95a92310c",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_UGD4107.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_UGD4107.csv"
+    },
+    {
+      "hole_id": "YARDDH003",
+      "relative_path": "inbox/SM_YARDDH003.csv",
+      "sha256": "a3abfe8c4ddf6c68cf206e23038b1c42fc390a176c4d448da6b7e22f527672ec",
+      "url": "https://warsydprdstadasc.blob.core.windows.net/downloads/Hylogger/Mineral_Logs/SM_YARDDH003.csv",
+      "source_page": "https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_YARDDH003.csv"
+    }
+  ],
+  "collars": {
+    "url": "https://dasc.dmirs.wa.gov.au/Download/File/5464",
+    "sha256": "b70f2fd103a41bd376aabd6a15db8e7a6c5fc0776d466a3c533523c8a616a959",
+    "members": [
+      "INTERIM_HyLogger_Dataset_Package_GDA2020_DB/DATABASES/HyLogger_Dataset_Package.sqlite",
+      "INTERIM_HyLogger_Dataset_Package_GDA2020_DB/DOCUMENTS/Licence_CCBY4_intrim.pdf",
+      "INTERIM_HyLogger_Dataset_Package_GDA2020_DB/DOCUMENTS/METADATA/METADATA_INTERIM_Hylogger_GDA2020.pdf"
+    ],
+    "destination": "official_interim_20261009/extracted",
+    "archive_name": "HyLogger_Drillhole_Package.zip"
+  }
+}

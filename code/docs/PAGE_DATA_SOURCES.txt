@@ -1,0 +1,442 @@
+HyLogger Interval Explorer: data sources and user guide
+Updated: 15 October 2026
+
+This document is served directly from docs/PAGE_DATA_SOURCES.txt at /sources.txt.
+It describes the local Core to Map application.
+The live library and input audit are authoritative for the files currently loaded.
+
+"Source data" here usually means GSWA's processed one-metre summaries, rather than individual raw scans.
+
+1. What the application does
+
+Compare indicators from several drillholes, optionally find continuous intervals that meet a numeric condition, inspect the results on maps and depth profiles, check the original records, and export a reproducible query.
+
+The recorded reference dataset comprises 42 drillholes, 14,338 one-metre records and 49 indicator fields. Download the source files separately; the live library reports what is currently loaded. The application does not identify rocks independently or train a model. Optional mineral-change analysis suggests depths to review; it does not confirm geological contacts. A threshold match means that the user's numeric condition is satisfied, not that an ore body has been identified.
+
+For example, a TBDD126 record covering 96–97 m represents one metre measured along the hole. It contains several indicators. It is not a tray, a whole piece of core, or one mineral. Many original scans may contribute to this metre. The application reads the supplied GSWA summary rather than aggregating all raw scans again.
+
+2. Source CSV files: locations and downloads
+
+Provider: GSWA / State of Western Australia, Department of Mines, Petroleum and Exploration.
+Product: GSWA TSG Summary Mineral Log.
+Download portal: DASC, https://dasc.dmirs.wa.gov.au/
+
+The paths below are relative to the active data folder. Data & sources shows that folder.
+Store downloaded source files in:
+data/
+
+Record counts exclude the descriptive header. Depth ranges describe loaded summaries, not necessarily the full drilled depth.
+
+CMDD001
+45 records; 0–45 m.
+nvcl_wa/CMDD001/supporting/SM_CMDD001.csv
+https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_CMDD001.csv
+
+CMDD002
+100 records; 50–150 m.
+nvcl_wa/CMDD002/supporting/SM_CMDD002.csv
+https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_CMDD002.csv
+
+EHD001
+448 records; span 0–451 m.
+Records are absent at 28–29, 39–40 and 50–51 m, leaving 448 m of recorded coverage.
+new_holes_20261015/SM_EHD001.csv
+https://dasc.dmirs.wa.gov.au/download/Metadata?fileName=Hylogger/Mineral_Logs/SM_EHD001.csv
+
+DRDD380
+709 records; 603–1312 m.
+new_holes_20261015/SM_DRDD380.csv
+https://dasc.dmirs.wa.gov.au/download/Metadata?fileName=Hylogger/Mineral_Logs/SM_DRDD380.csv
+
+RBDD008
+685 records; 0–685 m.
+new_holes_20261015/SM_RBDD008.csv
+https://dasc.dmirs.wa.gov.au/download/Metadata?fileName=Hylogger/Mineral_Logs/SM_RBDD008.csv
+
+TBDD126
+232 records; 69–301 m.
+cluster_tbdd_20261015/SM_TBDD126.csv
+https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_TBDD126.csv
+
+TBDD127
+79 records; 96–175 m.
+cluster_tbdd_20261015/SM_TBDD127.csv
+https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_TBDD127.csv
+
+TBDD128
+180 records; 79–259 m.
+cluster_tbdd_20261015/SM_TBDD128.csv
+https://dasc.dmirs.wa.gov.au/download/metadata?fileName=Hylogger/Mineral_Logs/SM_TBDD128.csv
+
+The additional 34 holes are:
+09THD028, 12DHDD0002, 15BRDD001, 17SRDD0004, 20CFRCD003, 22ACHD0001, AED022, AMDD003, BBDD0011, BCMH0072, BNRD023, CCUD001, CYDD0220, HCRD0051, JLS14DD002, KDD001, LJM-D007, MDDH0003, MFED069, MG19-003, MNDD0003, MOD7, MVRC041D, NDD17002, PLRCD001, RAGD039, RRLGDDD063, SCDD002, SCDD003, SGD001, TUR13DD003, TUR13DD004, UGD4107, YARDDH003.
+
+Their files are inbox/SM_<hole_id>.csv, with 11,860 records in total.
+download_manifest.json in the application folder lists every official source page, download URL and SHA-256. These are copies of source files downloaded from GSWA DASC, not predictions.
+
+Adding files:
+Place compatible GSWA Summary CSV files in data/inbox, retaining their original descriptive headers, then click Refresh library. Identical files are loaded only once. Different versions of the same hole are not silently combined or overwritten. Invalid formats or processing metadata are reported separately in the audit, leaving other accepted files usable. A hole without verified coordinates can still be queried and plotted, but is not placed on the map.
+The application first looks for data beside the program, then in its parent folder. Use --data-root to select another location.
+
+Opening files:
+Open the CSV in a spreadsheet or text editor. Dataset names, algorithms, processing parameters and field explanations precede the table. The row beginning Depth_from_(m),Depth_to_(m) starts the table header. Source record numbers count logical data records after that header, not physical text-file lines.
+Download from the links above and retain the filenames. Registered SHA-256 checks prevent a same-named replacement from being silently treated as the old data version.
+
+3. Scalars and field meanings
+
+A scalar is a numeric indicator associated with a metre of core.
+The 49 fields are not 49 minerals or 49 machine-learning predictions:
+
+36 mineral-group fields: 13 SWIR and 23 TIR. The same group may have separate outputs in both regions.
+2 Invalid fields: unclassified relative proportions, reported as quality-related outputs.
+4 W fields: the wavelength position of a spectral feature, in nm.
+6 D fields: dimensionless absorption-feature depth.
+1 VIS–SWIR Albedo field: an albedo-related value; its calibration and scale are not explicitly declared in the CSV.
+
+VNIR means visible and near-infrared; SWIR means shortwave infrared; TIR means thermal infrared. These are different spectral regions. Outputs in different regions should not automatically be treated as the same physical measurement.
+
+2200W_AlOH:
+The wavelength position of a feature associated with Al–OH absorption near 2200 nm.
+A value such as 2226.8418 is in nm, not metres, mineral percentage or mineralisation probability.
+"2200" identifies the approximate spectral region; individual values need not equal 2200.
+The demonstration condition >=2200 nm is an example numeric filter, not a validated exploration criterion.
+
+2200D_AlOH:
+The background-normalised depth of the absorption feature near that region: roughly, how pronounced the feature is.
+This is spectral-feature depth, not drillhole depth.
+Along-hole depth is recorded separately in Depth_from_(m) and Depth_to_(m).
+
+White-Mica_(System_SWIR):
+The white-mica group's relative spectral contribution reported by the automated SWIR processing.
+A value of 0.2 is a relative proportion under that method. It does not establish 20% white mica by mass or an assay grade.
+The source metadata names TSA+ for SWIR and jCLST for TIR. System denotes automated interpretation.
+The application preserves those source results; it does not identify the minerals again.
+
+N.A.:
+The source definition is "Not detected or below threshold".
+It is not zero and does not mean that the whole metre was unscanned.
+An entirely absent one-metre record is a different kind of gap.
+Neither provides a numeric value for threshold queries, and neither can bridge a continuous matching interval.
+
+NULL or blank:
+Missing values whose meaning is not specified by the source. They remain missing rather than being filled with zero.
+Across seven files, 1,555 field cells contain NULL. Several may belong to one record; this is not 1,555 metres of missing records.
+
+The source processing metadata records Bin_min_threshold=0.05 and Scalar_min_depth=0.001.
+Comparisons still need to respect spectral region, algorithm, interpretation level and units.
+
+4. Collar coordinates
+
+The Summary CSV files do not supply the coordinates used here.
+Coordinates come from the separate official DASC HyLogger Drillhole Package:
+https://dasc.dmirs.wa.gov.au/Download/File/5464
+
+Paths relative to the data folder:
+official_interim_20261009/extracted/INTERIM_HyLogger_Dataset_Package_GDA2020_DB/DATABASES/HyLogger_Dataset_Package.sqlite
+official_interim_20261009/extracted/INTERIM_HyLogger_Dataset_Package_GDA2020_DB/DOCUMENTS/METADATA/METADATA_INTERIM_Hylogger_GDA2020.pdf
+official_interim_20261009/extracted/INTERIM_HyLogger_Dataset_Package_GDA2020_DB/DOCUMENTS/Licence_CCBY4_intrim.pdf
+
+The application matches NVCL_HoleName in hylogger_dataset_index; checks Data_name, Hole_name, NVCL_HoleName and the main report; joins WAMEX_CollarId to wamex_collar.CollarId; and checks CompanyHoleId, Anumber and public status before reading Longitude / Latitude. The database and coordinate-metadata PDF fingerprints are checked too.
+
+All 42 reference holes matched coordinates when the specified database and coordinate metadata were loaded. Other installations depend on their available source files.
+TUR13DD003 has a summary ending at 817 m but a registered drilled depth of 631.6 m: a difference of 185.4 m. Records are retained, not truncated. The input audit and data_audit.json flag summary_exceeds_collar_depth.
+
+Source coordinates are GDA2020 longitude and latitude in decimal degrees.
+A collar is the surface entrance, not the underground drillhole trajectory.
+100 m along a hole need not mean 100 m vertically underground. Equal along-hole depths in different holes need not belong to the same stratum.
+Holes without a verified coordinate match remain available for queries, without an invented map location.
+
+5. Basemaps
+
+Aerial · Landgate is an online aerial-image background. Offline map is a manually selected geographic background.
+If the online service fails, the page reports it and retains the collar markers; it does not label the offline map as successfully loaded imagery.
+Basemaps provide surface context only. They do not participate in scalar or interval calculations.
+
+5.1 Landgate Locate imagery
+
+Provider: Western Australian Land Information Authority (Landgate).
+Product: Locate Mosaic (LGATE-322), a public statewide imagery mosaic.
+This is an additional basemap source, separate from the organiser's HyLogger dataset.
+No ArcGIS Online account or API key is needed for this connection.
+
+Source and terms:
+https://catalogue.data.wa.gov.au/dataset/locate-wa-mosaic
+https://www.landgate.wa.gov.au/siteassets/documents/location-data-and-services/licensing/slip-transaction-personal-use-licence-300523.pdf
+
+WMS endpoint:
+https://public-services.slip.wa.gov.au/public/services/SLIP_Public_Services/Locate/MapServer/WMSServer
+
+The application requests WMS 1.3.0, layer 1, transparent PNG, EPSG:7844 (GDA2020). The service returns imagery in that CRS; collars retain their GDA2020 coordinates.
+Requests cover the current map extent rather than downloading the complete imagery collection. They contain map bounds and image dimensions, not hole names, scalar values or query thresholds.
+
+The checked TBDD area has 0.5 m pixels, flight batches dated September 2010 and April 2011, and stated positional accuracy of 5 m.
+These specifications are location-specific. Other areas may have different dates and detail.
+A 0.5 m pixel is not half-metre positional accuracy, and the image is not live. Surface detail cannot establish underground rock locations.
+
+The page retains © Landgate attribution. The service has specific personal/non-commercial terms; it is not unrestricted or CC BY imagery.
+Service images are not redistributed in the code or result ZIP. Commercial deployment or image redistribution requires checking the applicable authorisation.
+
+5.2 Natural Earth offline map
+
+This additional public background is not the organiser's spectral dataset.
+It contains land/coasts, lakes, roads and towns for regional orientation.
+Generate code/static/basemap.json using data/README.md to enable the offline background. Once installed, it requires no network connection or paid map account.
+
+Product and terms:
+https://www.naturalearthdata.com/
+https://www.naturalearthdata.com/about/terms-of-use/
+Public domain; Natural Earth attribution is retained.
+Coordinates: WGS84. "10m" means 1:10,000,000 cartographic scale, not 10 m image pixels.
+
+Original layers:
+https://naturalearth.s3.amazonaws.com/10m_cultural/ne_10m_admin_0_countries.zip
+https://naturalearth.s3.amazonaws.com/10m_cultural/ne_10m_roads.zip
+https://naturalearth.s3.amazonaws.com/10m_cultural/ne_10m_populated_places_simple.zip
+https://naturalearth.s3.amazonaws.com/10m_physical/ne_10m_lakes.zip
+https://naturalearth.s3.amazonaws.com/10m_physical/ne_10m_lakes_australia.zip
+
+Regional markers group collars into 0.1-degree cells; overlapping groups may merge at the current zoom. Group centres are approximate regional locations. The local collar view retains the original GDA2020 coordinates.
+No precise datum transformation is applied between the WGS84 Natural Earth background and GDA2020 collars. That background is for approximate orientation. Landgate EPSG:7844 requests use GDA2020 directly.
+
+Transparent no-data portions of the aerial layer reveal the coarse Natural Earth background. Those areas are not replacement aerial photographs.
+
+5.3 QGIS connection
+
+docs/qgis_landgate_wms.xml contains a QGIS-importable connection name and URL.
+docs/QGIS_CONNECTION.txt explains the basemap connection and loading exported holes.csv as GDA2020 collar points.
+This connects existing data and results to QGIS. A fully linked native plugin has not been implemented.
+
+6. What the application calculates
+
+Continuous matching intervals:
+Join adjacent one-metre records only within the same hole and source processing series.
+Every metre must have a usable value, meet the threshold and be contiguous.
+The resulting length must meet Minimum continuous length, if provided.
+Leave the length blank to retain all matching records; turn off Highlight a condition to browse without interval filtering.
+
+Example: TBDD126, window 96–175 m, 2200W_AlOH >=2200 nm, minimum length 3 m.
+96–97 m: 2226.8418
+97–98 m: 2225.3164
+98–99 m: 2225.134
+99–100 m: 2226.2072
+100–101 m: 2213.7133
+101–102 m: 2220.6313
+102–103 m: 2225.7165
+103–104 m: 2207.5734
+104–105 m: 2208.6706
+105–106 m: 2187.5969
+
+The first nine metres satisfy the condition; the next does not. The query returns [96,105), length 9 m, exceeding the minimum of 3 m.
+In a larger window this run starts at 85 m. Here 96 m is a query-window edge, not a natural geological boundary. start_reason=window_continues records that the preceding metre outside the window also matches; end_reason=nonmatch records that 105–106 m is numeric but fails the condition. Minimum length is evaluated inside the requested window.
+This means "nine consecutive metres meet this condition", not "nine metres of confirmed ore".
+White-Mica_(System_SWIR) is N.A. in these rows: a numeric 2200W value does not itself establish white-mica abundance.
+
+Numeric coverage:
+Numeric length within the requested window divided by the requested window length.
+If 20 of 79 requested metres have usable values, coverage is 20/79, about 25.3%.
+This describes data availability, not model accuracy, confidence or mineral content.
+The combined figure sums across selected holes: three holes each requesting 79 m have a denominator of 237 m.
+Changing the indicator can change coverage.
+
+numeric_coverage_fraction retains the complete query window as its denominator, which is also reported explicitly. Additional figures describe numeric availability within the summary span and within existing records; these denominators are not interchangeable.
+
+Examples:
+EHD001 queried over 0–1312 m has 448 numeric metres in a 0–451 m summary span with three missing metres. The remaining 861 m are also beyond its registered 451 m drilled depth; they are not missing scans inside the summary.
+CMDD001 queried over 0–150 m has summaries only for 0–45 m. The other 105 m are within its registered 248.9 m drilled depth, but have no loaded summary. They are not gaps inside the summary span.
+Without verified drilled depth, the extent outside a summary remains unknown_extent.
+Inside the source span, numeric values, N.A., NULL/blanks, invalid values and entirely missing records are counted separately. Conflicting summary/depth records such as TUR13DD003 remain visible.
+
+Row coverage:
+Length represented by source records. A row with an N.A. indicator counts toward row coverage but not numeric coverage.
+EHD001 has 448 m of records over its 0–451 m span, not 451 m of complete coverage.
+
+Result statistics:
+Matching intervals: the number of continuous intervals meeting the length requirement.
+Total matched length: their summed length.
+Holes with a match: selected holes containing at least one matching interval.
+These are query results, not source-file ore-body statistics.
+
+Map colours:
+The map can show Analysis List selection or Applied result.
+In Applied result mode, colours distinguish a match; no match with complete numeric coverage; no match with incomplete coverage; or no numeric values. Unapplied holes are separate.
+Where source rows exist but all mineral values are N.A., the status states Not detected / below source threshold. Missing rows, NULL and invalid values remain separate.
+Colours do not indicate mineral type, grade or exploration potential.
+
+The demonstration condition on TBDD126, TBDD127 and TBDD128 over 96–175 m, 2200W_AlOH >=2200 nm, minimum 3 m returns 11 intervals totalling 90 m.
+This result belongs to those exact conditions. Apply changes again to obtain a new result.
+
+7. Using the page
+
+Browse group / Browse drillholes:
+Names come from accepted CSV files. Browse groups are manually organised collections, not discovered geological domains.
+Changing group, searching or paging changes the browser list only. Check filtered selects all filtered holes across pages. Clear checks clears pending checks.
+
+Analysis list:
+Check holes and click Add to analysis list. Add more from other browse groups; duplicates appear once. Remove an individual hole with × or use Clear list.
+Update view applies the list to the profiles and statistics. Checked but unadded holes are excluded.
+Refresh library retains listed holes still present. Reloading the page restores defaults; export and restore query.json to retain a query.
+
+Indicators to compare:
+Choose up to six source fields. Names, units and explanations come from source metadata and the project's field definitions.
+Fields with no numeric values in the selected holes and window are disabled. A field with values in some selected holes remains available. Zero is numeric; N.A. is not.
+Each profile retains its own axis and units.
+
+Along-hole depth window / From / To:
+Choose the requested along-hole range. Intervals use [from,to); [96,105) has length 9 m.
+Queries use complete one-metre records and integer-metre boundaries.
+
+Loaded data range:
+Reads the accepted records' start/end depths for each listed hole.
+Use full data range fills the shallowest start and deepest end across the list. Click Update view to apply.
+Expand a hole to inspect full-hole numeric spans and counts for each indicator; click a span to fill From/To.
+These are first-to-last ranges, not guarantees of continuous data between them.
+CMDD001 has 45 records over 0–45 m; Kaolin has 23 numeric records spanning 0–31 m. CMDD002 Kaolin has two numeric records over 112–114 m.
+Map tooltips and selected-hole details show the source-record depth range, not elevation or total drilled depth.
+
+Highlight a condition / Threshold / Minimum continuous length:
+Optionally filter one indicator using >= and a user-specified value in that indicator's units.
+Minimum continuous length is optional. The condition is not a combined multi-indicator geological rule.
+
+Update view:
+Applies edited settings and recomputes the query.
+Until then, the right-hand results remain those of the previous applied query.
+Applied query describes the conditions actually used.
+
+Locate / Regional context:
+Displays all library collars with verified coordinates. All holes restores the library extent; Region, WA, pan and zoom change the map view.
+List additions/removals update selection colours immediately. Show list fits listed collars.
+Select an area, then a hole, and use Add to Analysis List. Clicking a listed hole name also locates it.
+Update view is still required to apply a changed list to the analysis.
+
+Collar locations:
+Shows official GDA2020 surface-collar coordinates with the selected map colour mode.
+Selecting an applied hole also changes the depth profiles. A newly added hole must first be applied.
+
+Compare along depth:
+Shows the selected hole's one-metre source values on a shared depth axis, with separate numeric axes and units. Applied threshold lines and matching-interval bands remain available.
+This is not a raw spectrum with wavelength on the horizontal axis and reflectance on the vertical axis.
+Move the pointer to compare a depth; click to pin readings and inspect source references.
+View depth, zoom and Fit change the visible range, not the applied query.
+Candidate mineral-change results are shown once, in the Mineral Changes panel below.
+
+Hole summary:
+Reports each hole's query status, matching intervals, total matched length and coverage.
+
+Matching intervals:
+Lists start/end, length and contributing source-record counts.
+Endpoint reasons distinguish window continuation, adjacent nonmatching values, N.A., missing values, missing records and series ends. These are query reasons, not geological boundary types.
+
+View source / Interval evidence:
+Shows the one-metre values, units, filenames and logical record numbers making up an interval.
+Record numbers exclude the descriptive CSV header.
+
+Data & sources:
+Explains indicators, available holes, provenance and this guide.
+
+Query & source details:
+Shows applied conditions, engine and field-definition versions, the source manifest and input audit.
+
+Export result pack / Restore a query:
+Exports a reviewable query and results, or restores conditions from query.json.
+Map pan/zoom and the currently inspected hole are viewing state, not a new query or a complete saved-view bookmark.
+
+8. Raw spectra, photographs and mineral-change analysis
+
+Full HyLogger archives:
+WA NVCL / NCI catalogue
+https://thredds.nci.org.au/thredds/catalog/rs07/WA/catalog.html
+
+Obtain the original CMDD001 and CMDD002 archives from the catalogue above if photographs are required.
+After installing the matching files, the reference photo sets provide 12 CMDD001 trays and 23 CMDD002 trays.
+The application reads the matching TSG scan-header fields H (hole), T (tray), L (line) and D (along-hole depth), checking embedded JPEG tray numbers and row counts. It does not recompute the full spectra.
+
+Selecting a matching interval lists same-hole trays whose scan depths intersect it. Previous tray, Next tray and the dropdown switch trays. Without an interval selection, the current profile depth window is used.
+If a matching photograph is unavailable, the page shows an empty state rather than a different hole's example.
+
+Photos show whole trays. Scan ranges can contain gaps; a tray or all its pixels need not match the condition. Actual TSG scan endpoints can differ slightly from rounded photo-title depths.
+Photo and depth sources records photograph and TSG SHA-256 values, unrounded ranges and scan counts.
+Photographs are not included in the query ZIP.
+
+To add photos, retain the native package structure:
+data/nvcl_wa/<hole_id>/extracted/<package>/<hole_id>_tsg.tsg
+data/nvcl_wa/<hole_id>/extracted/<package>/<hole_id>_0001.jpg
+A standalone JPEG without its matching TSG cannot be located automatically. Ambiguous packages or mismatched metadata are not silently selected. Use Refresh library to recheck.
+
+The full archives are not direct replacements for the Summary CSV files.
+
+Mineral Changes:
+Expand Open mineral change viewer below Compare along depth.
+It uses the same GSWA one-metre Summary CSVs. Generate results locally with Calculate mineral changes or the standalone builder. Precomputed results are not included in the source repository.
+Source CSV SHA-256 values are checked before display. If a current result is absent, Calculate mineral changes runs locally and caches it under code/work/change-viewer/.
+The algorithm entry points are code/analysis/build_viewer.py and code/analysis/hylogger_pipeline/boundaries.py, using 36 mineral-group fields to find changes in their combinations.
+
+Calculation uses full-hole contiguous valid blocks. View depth clips the display; it does not refit the selected window.
+Compare applied holes supports up to six holes. SWIR and TIR bands show major groups' relative spectral proportions, not mass percentages or grade.
+Candidate lines are possible composition changes, not confirmed contacts. Company-log changes are reference observations; source status appears beside each hole. Candidates can still be calculated without company logs.
+Click a candidate depth to pin the corresponding upper scalar readings. Download table exports segments for the current settings and window without joining across gaps.
+Shortest segment controls change-detection segmentation; it is distinct from Minimum continuous length in the threshold query.
+Sensitivity and segment-length controls select among saved parameter results. Existing evaluation applies only to the default sensitivity and 2 m minimum segment, not every parameter combination or newly calculated hole.
+
+New calculations require NumPy; viewing source-matched cached results does not.
+The candidate method encodes mineral-group N.A. as zero internally. This is a method assumption; original scalar profiles and threshold queries preserve N.A. as reported.
+Parameter stability, where reported, means recurrence across tested settings, not probability that a geological boundary is correct.
+This panel does not load photos or train a machine-learning model. Method and validation details are in code/analysis/README.md.
+Threshold intervals and change-detection candidates answer different questions and have separate exports.
+
+Not implemented:
+DEM elevation analysis, underground trajectory reconstruction, stratigraphic interpolation, terrain prediction or remote-sensing inversion.
+Landgate imagery provides surface context only.
+
+9. Checking and exporting provenance
+
+To check an interval:
+1. Apply a query with a condition.
+2. Open Matching intervals and select an interval.
+3. Inspect View source / Interval evidence.
+4. Compare filenames, logical record numbers and original values with the source CSV.
+
+To check the query:
+Open Query & source details in the footer, or Query, versions and input audit under Data & sources.
+Review applied conditions, source-file fingerprints, coordinate provenance, software versions and input warnings.
+
+Export result pack contains:
+query.json: conditions and version identifiers for restoration.
+profiles.csv: source values for the selected comparison indicators.
+intervals.csv: computed continuous matching intervals.
+holes.csv: collar positions, query results and coverage by hole.
+evidence.csv: source values, original tokens, filenames and record references for matches.
+manifest.json: file fingerprints, coordinate provenance and field definitions.
+data_audit.json: input checks.
+README.txt: query and interpretation notes.
+
+Restore a query reads query.json. Source files, metric definitions and engine version must match. A changed version requires a new query rather than being presented as the old result.
+Coordinate provenance participates in the version check: a machine without the supplemental database cannot restore a query exported with that database as if the data versions were identical.
+
+10. Attribution, licences and code
+
+Retain GSWA / State of Western Australia attribution and original links.
+Natural Earth and Landgate are additional map sources with separate terms; free access does not mean identical licences.
+The project's MIT licence covers its code and documentation, not third-party data.
+
+The supplemental Licence_CCBY4_intrim.pdf contains both CC BY 4.0 wording and restrictions on third-party sharing/display. Their applicable scope remains to be clarified with the organiser. The original licence is retained in the source package.
+Download source datasets separately. Generate derived results and the optional offline basemap locally; these files are not part of the source repository.
+
+Module responsibilities:
+datasets.py: original eight CSV registrations and browse groups.
+library.py: inbox discovery, deduplication, processing checks and the live manifest.
+summaries.py: CSV metadata, original values and logical record references.
+metrics.py: field names, categories, units and interpretations.
+depth_ranges.py: source-record spans and per-indicator numeric spans.
+coords.py: supplemental-package validation and collar lookup.
+engine.py: threshold intervals, coverage, audit and version checks.
+exports.py: query result ZIP.
+core_photos.py: matching TSG/JPEG identity, scan-depth indexing and fingerprint-checked photographs.
+change_viewer.py: source matching, cached mineral-change results and local calculation.
+analysis/: candidate-change algorithm, standalone viewer and method/validation documentation.
+analysis_overlay.py: optional candidate-data API.
+static/app.js: page state, maps, profiles and selection links.
+static/change-viewer.js: lower mineral-change panel, comparison, calculation status and depth pinning.
+static/app.css: layout and theme; theme colours are not a data source.
+download_data.py and download_manifest.json: official downloads and file fingerprints.
+tools/build_basemap.py: Natural Earth background preparation.
+

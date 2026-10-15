@@ -1,0 +1,30 @@
+.change-card { border:1px solid var(--line); border-radius:8px; background:#fff; overflow:hidden; }
+.change-heading { padding:18px 20px 10px; }
+.change-heading h3 { margin:3px 0 5px; }
+.change-heading p, .change-range, .change-status, .change-reasons { color:var(--muted); font-size:12px; }
+#change-content > summary { cursor:pointer; padding:10px 20px 16px; color:var(--accent-dark); font-weight:600; }
+#change-summary { margin-left:12px; font-size:11px; font-weight:400; color:var(--muted); }
+.change-body { padding:0 16px 16px; border-top:1px solid var(--line); }
+.change-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding-top:14px; }
+.change-toolbar label { display:flex; align-items:center; gap:8px; font-size:12px; }
+.change-toolbar button, .change-open { padding:7px 10px; border:1px solid var(--line); border-radius:5px; background:#fff; font-size:12px; }
+#change-compute { color:#fff; background:var(--accent-dark); border-color:var(--accent-dark); }
+.change-open { margin-left:auto; color:var(--accent-dark); text-decoration:none; }
+.change-range { padding:8px 0; }
+#change-choices { margin:3px 0 12px; padding:10px; border:1px solid var(--line); border-radius:5px; }
+#change-choices legend { padding:0 5px; font-size:11px; color:var(--muted); }
+#change-holes { display:flex; flex-wrap:wrap; gap:8px; max-height:190px; overflow:auto; }
+#change-holes label { display:flex; gap:6px; padding:6px 9px; border:1px solid var(--line); border-radius:4px; font-size:12px; cursor:pointer; }
+#change-holes label:has(input:checked) { background:var(--soft); border-color:#c3788c; }
+#change-holes input { accent-color:var(--accent); }
+#change-holes small { display:block; color:var(--muted); font-size:10px; }
+.change-status { margin:5px 0; }
+.change-status.change-error { color:#a52938; }
+.change-reasons { margin:5px 0; overflow-wrap:anywhere; }
+#change-progress { display:block; width:100%; max-width:360px; height:6px; accent-color:var(--accent); margin:10px 0; }
+#change-progress[hidden], #change-frame[hidden], .change-toolbar [hidden], #change-choices[hidden] { display:none; }
+#change-frame { display:block; width:100%; height:700px; border:0; margin-top:12px; }
+.change-method { margin-top:12px; font-size:11px; color:var(--muted); }
+.change-method summary { cursor:pointer; }
+.change-method p { margin:7px 0; max-width:850px; }
+@media(max-width:650px) { .change-heading { padding:15px 12px 8px; } .change-body { padding:0 8px 12px; } #change-content > summary { padding-left:12px; } .change-open { margin-left:0; } #change-summary { display:block; margin:4px 0 0 14px; } }

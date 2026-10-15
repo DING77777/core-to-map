@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>HyLogger Interval Explorer</title>
+    <link rel="stylesheet" href="/app.css">
+    <link rel="stylesheet" href="/scalar-picker.css">
+    <link rel="stylesheet" href="/profiles.css">
+    <link rel="stylesheet" href="/change-viewer.css">
+    <script src="/imagery.js" defer></script>
+    <script src="/scalar-picker.js" defer></script>
+    <script src="/profiles.js" defer></script>
+    <script src="/change-viewer.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#results">Skip to results</a>
+    <header class="app-header">
+      <a class="brand" href="/" aria-label="HyLogger Interval Explorer home">
+        <span class="brand-symbol" aria-hidden="true">
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+        <span>
+          <strong>HyLogger</strong>
+          <span class="brand-subtitle">Interval Explorer</span>
+        </span>
+      </a>
+      <div class="header-right">
+        <span class="local-badge">
+          <i></i> LOCAL WORKSPACE</span>
+        <span id="dataset-count" class="dataset-count"></span>
+        <button class="text-button" id="refresh-library" type="button">Refresh library</button>
+        <button class="text-button" id="notes-button" type="button">Data & sources <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    </header>
+    <div class="workspace">
+      <aside class="query-panel" aria-labelledby="query-title">
+        <div class="section-kicker">QUERY</div>
+        <h1 id="query-title">Explore & compare</h1>
+        <p class="sidebar-intro">Compare indicators at the same depth. Add a condition to highlight intervals of interest.</p>
+        <p class="field-footnote" id="library-status" role="status"></p>
+        <details class="library-issues" id="library-issues" hidden><summary>Files needing attention</summary><div id="library-issue-list"></div></details>
+        <form id="query-form" novalidate>
+          <label class="field-label" for="hole-group">Browse group</label>
+          <select id="hole-group">
+            <option value="">All holes</option>
+          </select>
+          <p class="field-footnote" id="group-note"></p>
+          <fieldset class="hole-fieldset">
+            <legend>Browse drillholes</legend>
+            <label class="sr-only" for="hole-search">Search hole names in this set</label>
+            <input id="hole-search" type="search" placeholder="Search hole names" autocomplete="off">
+            <p id="hole-count" class="field-hint" role="status"></p>
+            <div class="hole-selection-actions">
+              <button id="holes-select-filtered" type="button">Check filtered</button>
+              <button id="holes-clear" type="button">Clear checks</button>
+            </div>
+            <div id="hole-options" class="hole-options">
+              <p class="subtle">Loading local data…</p>
+            </div>
+            <div class="hole-pages" aria-label="Drillhole pages">
+              <button id="holes-previous" type="button" disabled>Previous</button>
+              <span id="holes-page">Page 1 / 1</span>
+              <button id="holes-next" type="button" disabled>Next</button>
+            </div>
+            <button id="holes-add" type="button" class="secondary-button" disabled>Add to analysis list ↓</button>
+            <p class="field-footnote">Groups, search and pages only browse. Checked holes join your query when added below.</p>
+          </fieldset>
+          <section class="analysis-list-panel" aria-labelledby="analysis-list-heading">
+            <div class="analysis-list-heading"><h2 id="analysis-list-heading">Analysis list <span id="analysis-list-count">0 holes</span></h2><button id="analysis-list-clear" type="button" disabled>Clear list</button></div>
+            <ul id="analysis-list" aria-label="Drillholes included in the query"></ul>
+          </section>
+          <div class="field-heading">Along-hole depth window <span>m</span>
+          </div>
+          <div class="input-pair">
+            <label>From<input id="depth-from" name="depth_from_m" type="number" min="0" step="1" value="0" inputmode="numeric" required>
+            </label>
+            <label>To<input id="depth-to" name="depth_to_m" type="number" min="1" step="1" value="150" inputmode="numeric" required>
+            </label>
+          </div>
+          <p class="field-footnote">Along-hole depth · [from, to)</p>
+          <section class="depth-data" aria-labelledby="depth-data-heading">
+            <h3 id="depth-data-heading">Loaded data range</h3>
+            <p id="depth-data-summary" aria-live="polite"></p>
+            <button id="depth-use-full" type="button" class="secondary-button" disabled>Use full data range</button>
+            <p id="depth-range-status" role="status"></p>
+            <div id="depth-ranges"></div>
+            <p class="depth-data-note">Expand a hole for the numeric depths of your selected indicators. Ranges may contain gaps.</p>
+          </section>
+          <div class="field-label" id="scalar-picker-label">Indicators to compare</div>
+          <div id="scalar-picker" aria-labelledby="scalar-picker-label"></div>
+          <p id="availability-status" class="field-footnote" role="status"></p>
+          <label class="filter-toggle"><input id="filter-enabled" type="checkbox"> Highlight a condition <span>optional</span></label>
+          <fieldset id="filter-fields" class="filter-fields" disabled>
+          <legend class="sr-only">Optional interval condition</legend>
+          <label class="field-label" for="metric">Apply condition to</label>
+          <select id="metric" name="metric_id" aria-describedby="metric-description"></select>
+          <p class="metric-description" id="metric-description"></p>
+          <label class="field-label" for="threshold">Threshold <span class="unit-label" id="threshold-unit">nm</span>
+          </label>
+          <div class="input-with-prefix">
+            <span aria-hidden="true">≥</span>
+            <input id="threshold" name="threshold" type="number" step="any" value="2200" required aria-label="Feature wavelength greater than or equal to, in nanometres">
+          </div>
+          <p class="field-footnote">Thresholds are your search conditions. Defaults are examples, not official geological boundaries.</p>
+          <label class="field-label" for="min-length">Minimum continuous length <span class="unit-label">m · optional</span>
+          </label>
+          <input id="min-length" name="min_run_m" type="number" min="1" step="1" placeholder="No minimum" inputmode="numeric">
+          <div class="presets" aria-label="Minimum length presets">
+            <span>Try</span>
+            <button type="button" data-min-length="">Any</button>
+            <button type="button" data-min-length="1">≥ 1 m</button>
+            <button type="button" data-min-length="3">≥ 3 m</button>
+            <button type="button" data-min-length="12">≥ 12 m</button>
+          </div>
+          <p class="field-footnote">Leave length blank to keep every passing record. Missing values always break an interval.</p>
+          </fieldset>
+          <p class="inline-error" id="form-error" role="alert" hidden></p>
+          <button class="primary-button" id="run-button" type="submit" disabled>
+            <span>Update view</span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <p class="draft-status" id="draft-status" aria-live="polite">Preparing local data.</p>
+        </form>
+        <div class="sidebar-export">
+          <div class="section-kicker">EXPORT</div>
+          <button class="secondary-button" id="export-button" type="button" disabled>
+            <span aria-hidden="true">↓</span> Export result pack</button>
+          <button class="restore-button" id="restore-button" type="button">Restore a query <span aria-hidden="true">↗</span>
+          </button>
+          <input id="restore-file" type="file" accept=".json,application/json" hidden>
+            <p class="field-footnote">ZIP includes profiles, results, source references and query JSON.</p>
+          <p class="inline-error" id="transfer-error" role="alert" hidden></p>
+        </div>
+        <p class="sidebar-footer">One-metre source summaries.<br>Missing values interrupt a match.</p>
+      </aside>
+      <main id="results" tabindex="-1">
+        <div class="results-heading">
+          <div>
+            <div class="section-kicker">EXPLORER</div>
+            <h2 id="workspace-title">Results</h2>
+          </div>
+          <span class="status-pill" id="query-status" aria-live="polite">Loading</span>
+        </div>
+        <div class="applied-bar">
+          <span class="applied-label">APPLIED QUERY</span>
+          <p id="applied-summary">Your results will appear here.</p>
+        </div>
+        <div class="error-banner" id="request-error" role="alert" hidden></div>
+        <div class="result-metrics" aria-label="Applied query summary">
+          <div>
+            <strong id="stat-runs">—</strong>
+            <span>matching intervals</span>
+          </div>
+          <div>
+            <strong id="stat-length">—<small> m</small>
+            </strong>
+            <span>total matched length</span>
+          </div>
+          <div>
+            <strong id="stat-holes">—<small> / —</small>
+            </strong>
+            <span>holes with a match</span>
+          </div>
+          <div class="coverage-stat">
+            <strong id="stat-coverage">—<small>%</small>
+            </strong>
+            <span>numeric / requested window</span>
+          </div>
+        </div>
+        <div class="visual-grid">
+          <section class="visual-card map-card" aria-labelledby="map-title">
+            <div class="card-heading">
+              <div>
+                <span class="card-kicker">LOCATE</span>
+                <h3 id="map-title">Regional context</h3>
+              </div>
+              <div class="regional-presets" aria-label="Regional map extent">
+                <button id="regional-library" type="button" aria-pressed="false">All holes</button>
+                <button id="regional-region" type="button" aria-pressed="true">Region</button>
+                <button id="regional-wa" type="button" aria-pressed="false">WA</button>
+              </div>
+            </div>
+            <div class="basemap-switch">
+              <label for="basemap-mode">Background</label>
+              <select id="basemap-mode">
+                <option value="aerial" selected>Aerial · Landgate</option>
+                <option value="map">Offline map</option>
+              </select>
+              <span id="imagery-note">Online aerial imagery · no account · personal / non-commercial use</span>
+            </div>
+            <div class="regional-map-shell">
+              <div id="regional-map-area" class="regional-map-area" aria-label="Regional geographic context. Drag to pan.">
+                <div class="chart-empty">Loading regional context…</div>
+              </div>
+              <div class="regional-zoom" aria-label="Regional map zoom">
+                <button id="regional-zoom-in" type="button" aria-label="Zoom regional map in">+</button>
+                <button id="regional-zoom-out" type="button" aria-label="Zoom regional map out">−</button>
+              </div>
+            </div>
+            <div class="regional-source-line">
+              <span id="map-background-status" data-state="loading">Loading online aerial imagery</span>
+              <a id="basemap-attribution" href="https://catalogue.data.wa.gov.au/dataset/locate-wa-mosaic" target="_blank" rel="noopener noreferrer">© Landgate / SLIP</a>
+            </div>
+            <p class="regional-scale-note" id="regional-library-status">All located library holes. Select an area to inspect its collars below.</p>
+            <div class="map-selection-legend"><span><i class="library-dot"></i>Not in list</span><span><i class="partial-dot"></i>Area partly selected</span><span><i class="listed-dot"></i>In analysis list</span></div>
+            <div class="local-map-heading">
+              <div>
+                <h4>Collar locations <span id="local-count"></span>
+                </h4>
+                <p>Source GDA2020 coordinates</p>
+              </div>
+              <div class="map-controls" aria-label="Local collar view controls">
+                <button id="map-zoom-in" type="button" aria-label="Zoom collar location view in">+</button>
+                <button id="map-zoom-out" type="button" aria-label="Zoom collar location view out">−</button>
+                <button id="map-fit" type="button">Fit area</button>
+                <button id="map-fit-list" type="button">Show list</button>
+              </div>
+            </div>
+            <div id="map-area" class="map-area" aria-label="Local GDA2020 collar coordinates. Drag to pan; use buttons to zoom.">
+              <div class="chart-empty">Loading library locations…</div>
+            </div>
+            <div class="map-selection-panel">
+              <div class="map-selection-fields">
+                <label for="map-hole-select">Choose a hole in this view<select id="map-hole-select" disabled><option>Select an area above</option></select></label>
+                <label for="map-colour-by">Colour by<select id="map-colour-by"><option value="list">Analysis list</option><option value="result">Applied result</option></select></label>
+              </div>
+              <p id="map-hole-detail">Click a collar to see its source location and add it to your analysis list.</p>
+              <div class="map-selection-actions">
+                <button id="map-toggle-analysis" type="button" disabled>Add to Analysis List</button>
+                <button id="map-inspect-current" type="button" disabled>View applied profile ↓</button>
+              </div>
+              <p id="map-list-status" class="field-footnote" role="status"></p>
+            </div>
+            <div class="map-legend">
+              <span>
+                <i class="legend-dot match"></i>Match</span>
+              <span>
+                <i class="legend-dot complete"></i>No match, complete</span>
+              <span>
+                <i class="legend-dot incomplete"></i>No match, incomplete</span>
+              <span>
+                <i class="legend-dot no-data"></i>No values</span>
+              <span>
+                <i class="legend-dot not-applied"></i>Not in applied result</span>
+            </div>
+            <p class="imagery-status" id="local-imagery-status" role="status" hidden></p>
+            <p class="imagery-status" id="local-imagery-credit"><a href="https://catalogue.data.wa.gov.au/dataset/locate-wa-mosaic" target="_blank" rel="noopener noreferrer">© Western Australian Land Information Authority (Landgate) / SLIP</a></p>
+            <div class="card-footnote">
+              <span>GDA2020 · source longitude / latitude</span>
+              <span>Drag to pan · View only</span>
+            </div>
+            <p class="location-note" id="location-note">No road, imagery or terrain detail is implied in this local view.</p>
+          </section>
+          <section class="visual-card depth-card" aria-labelledby="depth-title">
+            <div class="card-heading">
+              <div>
+                <span class="card-kicker">INSPECT</span>
+                <h3 id="depth-title">Compare along depth</h3>
+              </div>
+              <select id="selected-hole" aria-label="Choose drillhole to inspect" disabled>
+                <option>No drillhole</option>
+              </select>
+            </div>
+            <div class="depth-view-controls">
+              <span>View depth</span>
+              <label class="sr-only" for="view-from">Display depth from, metres</label>
+              <input id="view-from" type="number" step="1" min="0" placeholder="From">
+              <span>–</span>
+              <label class="sr-only" for="view-to">Display depth to, metres</label>
+              <input id="view-to" type="number" step="1" min="1" placeholder="To">
+              <span>m</span>
+              <button id="depth-zoom-in" type="button" aria-label="Zoom depth profile in">+</button>
+              <button id="depth-zoom-out" type="button" aria-label="Zoom depth profile out">−</button>
+              <button id="depth-fit" type="button">Fit</button>
+            </div>
+            <div class="profile-actions">
+              <button class="text-button" id="depth-selected" type="button" disabled>Zoom to selected interval</button>
+              <button class="text-button" id="depth-expand" type="button" aria-pressed="false">Expand profile</button>
+            </div>
+            <p class="inline-error compact" id="view-error" role="alert" hidden></p>
+            <div id="depth-area" class="depth-area">
+              <div class="chart-empty">Choose a hole to inspect its source values.</div>
+            </div>
+            <div class="profile-legend">
+              <span>
+                <i class="legend-line"></i>1 m summary value</span>
+              <span>
+                <i class="legend-band"></i>Matching interval · 1 m summaries</span>
+              <span>
+                <i class="legend-threshold"></i>Threshold</span>
+            </div>
+            <p class="card-footnote" id="profile-note">Each track keeps its own units. Move over the plots to compare one depth; click to pin it. Zoom changes every track together.</p>
+          </section>
+          <section class="change-card" id="change-card" aria-labelledby="change-title">
+            <div class="change-heading">
+              <span class="card-kicker">MINERAL CHANGES</span>
+              <h3 id="change-title">Compare mineral combinations</h3>
+              <p>View SWIR / TIR composition tracks and candidate changes alongside the scalar profiles above.</p>
+            </div>
+            <details id="change-content">
+              <summary>Open mineral change viewer <span id="change-summary">Choose a hole to inspect</span></summary>
+              <div class="change-body">
+                <div class="change-toolbar">
+                  <label for="change-mode">Show <select id="change-mode"><option value="current">Current inspected hole</option><option value="compare">Compare applied holes</option></select></label>
+                  <button id="change-compute" type="button" hidden>Calculate mineral changes</button>
+                  <button id="change-refresh" type="button">Check saved results</button>
+                  <a id="change-open" class="change-open" target="_blank" rel="noopener" hidden>Open full viewer ↗</a>
+                </div>
+                <p id="change-range" class="change-range"></p>
+                <fieldset id="change-choices" hidden><legend>Choose up to 6 holes from the applied view</legend><div id="change-holes"></div></fieldset>
+                <p id="change-status" class="change-status" role="status"></p>
+                <progress id="change-progress" aria-label="Mineral change calculation progress" hidden></progress>
+                <p id="change-reasons" class="change-reasons" hidden></p>
+                <iframe id="change-frame" title="Mineral group composition and candidate changes" hidden></iframe>
+                <details class="change-method">
+                  <summary>How this view is calculated</summary>
+                  <p>The calculation looks for changes in the combination of 36 mineral-group columns in each hole's one-metre summary CSV. It runs over usable blocks of the whole hole and saves several sensitivity settings. The depth window above clips those results; it does not recalculate them.</p>
+                  <p>Mineral groups are relative spectral proportions, not measured mineral mass or grade. In this analysis, N.A. group entries are treated as absent components; gaps break the calculation. Raw scalar profiles above retain their missing-value labels.</p>
+                  <p>Candidate lines suggest places to inspect, not confirmed geological contacts. Company-log code changes provide a comparison where available; the legend explains the line styles. Only the default sensitivity and 2 m shortest segment were evaluated; other settings are exploratory. This shortest segment setting is separate from the optional continuous-match filter above.</p>
+                  <p>Click a candidate line or its depth in the table to pin that depth in the scalar profiles. Matching depths across holes do not imply the same geological layer.</p>
+                </details>
+              </div>
+            </details>
+          </section>
+        </div>
+        <section class="table-card" aria-labelledby="table-title">
+          <div class="table-heading">
+            <div class="tabs" role="tablist" aria-label="Result tables">
+              <button id="holes-tab" type="button" role="tab" aria-selected="true" aria-controls="holes-panel">Hole summary <span id="holes-tab-count">0</span>
+              </button>
+              <button id="runs-tab" type="button" role="tab" aria-selected="false" aria-controls="runs-panel" tabindex="-1">Matching intervals <span id="runs-tab-count">0</span>
+              </button>
+            </div>
+            <span class="table-hint" id="table-title">Select a row to inspect</span>
+          </div>
+          <div id="holes-panel" role="tabpanel" aria-labelledby="holes-tab">
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Drillhole</th>
+                    <th scope="col">Result</th>
+                    <th scope="col">Intervals</th>
+                    <th scope="col">Matched length</th>
+                    <th scope="col">Numeric / requested window</th>
+                  </tr>
+                </thead>
+                <tbody id="holes-body">
+                  <tr>
+                    <td colspan="5" class="table-empty">No query has been applied.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div id="runs-panel" role="tabpanel" aria-labelledby="runs-tab" hidden>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Drillhole</th>
+                    <th scope="col">Depth interval</th>
+                    <th scope="col">Length</th>
+                    <th scope="col">Source records</th>
+                    <th scope="col">Evidence</th>
+                  </tr>
+                </thead>
+                <tbody id="runs-body">
+                  <tr>
+                    <td colspan="5" class="table-empty">No matching intervals.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <section class="evidence-card core-card" id="core-card" aria-labelledby="core-title">
+          <div class="evidence-heading"><div><div class="section-kicker">LOCAL SOURCE PHOTOGRAPH</div><h3 id="core-title">Core tray photographs</h3></div><span id="core-photo-count" class="evidence-badge">0 trays</span></div>
+          <p class="card-footnote" id="core-photo-context">Select a drillhole or matching interval.</p>
+          <div class="core-photo-navigation"><button id="core-photo-previous" type="button" disabled>Previous tray</button><select id="core-photo-select" aria-label="Choose an overlapping core tray photograph"></select><button id="core-photo-next" type="button" disabled>Next tray</button></div>
+          <div id="core-photo-content" class="core-photo-content"><p class="subtle">No local core photographs are available.</p></div>
+        </section>
+        <section class="evidence-card" id="evidence-card" aria-labelledby="evidence-title">
+          <div class="evidence-heading">
+            <div>
+              <div class="section-kicker">SOURCE RECORDS</div>
+              <h3 id="evidence-title">Interval evidence</h3>
+            </div>
+            <span class="evidence-badge" id="evidence-count">No interval selected</span>
+          </div>
+          <div id="evidence-content" class="evidence-empty">
+            <span class="evidence-symbol" aria-hidden="true">≡</span>
+            <div>
+              <strong>Select a matching interval.</strong>
+              <p>See its original values, units and source record references.</p>
+            </div>
+          </div>
+        </section>
+        <footer class="main-footer">
+          <span>HyLogger Interval Explorer · Independent prototype</span>
+          <button class="text-button" id="provenance-button" type="button">Query & source details <span aria-hidden="true">↗</span>
+          </button>
+        </footer>
+      </main>
+    </div>
+    <dialog id="notes-dialog" aria-labelledby="notes-title">
+      <div class="dialog-heading">
+        <div>
+          <div class="section-kicker">DATA & INTERPRETATION</div>
+          <h2 id="notes-title">Data & sources</h2>
+        </div>
+        <button class="close-button" id="close-notes" type="button" aria-label="Close data notes">×</button>
+      </div>
+      <div class="dialog-content">
+        <p class="source-guide-link"><a href="/sources.txt" target="_blank" rel="noopener">Data sources and user guide ↗</a></p>
+        <p class="source-guide-link"><a href="/qgis.txt" target="_blank" rel="noopener">QGIS connection guide ↗</a> · <a href="/qgis-landgate.xml" download="qgis_landgate_wms.xml">Download QGIS connection</a></p>
+        <p class="source-guide-intro">The guide lists every source file, the data behind each panel, and the results calculated by this application.</p>
+        <dl>
+          <dt>Source data and calculated results</dt>
+          <dd>GSWA one-metre summary CSVs supply scalar fields. The library lists the files accepted in this installation. The official supplementary SQLite database supplies verified collar coordinates. Continuous matches, lengths, coverage and status colours are calculated here from your query.</dd>
+          <dt>Scalars</dt>
+          <dd>Wavelength positions use nanometres; feature depths are dimensionless. Mineral-group columns are relative spectral proportions, not measured mass percentages or grade. SWIR and TIR have separate interpretations.</dd>
+          <dt>Intervals and missing values</dt>
+          <dd>A source interval [96, 97) covers one metre along the hole. Numeric coverage is available depth divided by the requested window. N.A., blanks and missing rows interrupt a continuous match; none are zero.</dd>
+          <dt>Map coordinates</dt>
+          <dd>Regional areas use a 0.1° grid; overlapping markers are grouped at the current zoom. Group centres are approximate. The separate collar view uses unrounded source GDA2020 coordinates. Neither view shows underground trajectories. The optional offline map uses Natural Earth WGS84 geography at 1:10,000,000.</dd>
+          <dt>Online imagery</dt>
+          <dd>Landgate Locate provides aerial imagery without an account for personal / non-commercial use under its <a href="https://www.landgate.wa.gov.au/siteassets/documents/location-data-and-services/licensing/slip-transaction-personal-use-licence-300523.pdf" target="_blank" rel="noopener noreferrer">custom licence</a>. Images are requested in GDA2020 to match the collars. Dates and resolution vary by location; the local caption reports the imagery index at the map centre. Pixel size is not positional accuracy. Transparent no-data areas reveal the coarse Natural Earth geographic map underneath, not replacement aerial pixels. Neither background changes the scalar query or is included in result exports.</dd>
+          <dt>Query and display</dt>
+          <dd>Run query applies edited conditions. Pan, zoom, hole selection and profile zoom change only the view. Exports contain the applied query, source records and versions for reproduction.</dd>
+        </dl>
+        <div id="catalog-notes"></div>
+        <details class="technical-details">
+          <summary>Query, versions and input audit</summary>
+          <pre id="provenance-content">No query applied.</pre>
+        </details>
+      </div>
+    </dialog>
+    <div class="toast" id="toast" role="status" hidden></div>
+  </body>
+</html>

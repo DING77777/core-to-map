@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE connections>
+<qgsWMSConnections version="1.0">
+  <wms name="Landgate Locate aerial imagery - personal noncommercial use"
+       url="https://public-services.slip.wa.gov.au/public/services/SLIP_Public_Services/Locate/MapServer/WMSServer"
+       ignoreGetMapURI="false" ignoreGetFeatureInfoURI="false"
+       ignoreAxisOrientation="false" invertAxisOrientation="false"
+       smoothPixmapTransform="false" dpiMode="7" username="" password="" />
+</qgsWMSConnections>

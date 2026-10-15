@@ -1,0 +1,7 @@
+numpy>=1.26
+scipy>=1.11
+matplotlib>=3.8
+# Scan-level experiments only:
+# pandas>=2.1
+# scikit-learn>=1.4
+# pytsg: https://github.com/Geological-Survey-of-Western-Australia/pytsg

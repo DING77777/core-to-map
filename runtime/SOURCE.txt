@@ -1,0 +1,12 @@
+Windows x64 runtime
+
+Python 3.12.14: https://www.python.org/
+NumPy 2.3.5: https://numpy.org/
+
+Includes the Python standard library and the NumPy cp312-cp312-win_amd64
+distribution with its bundled libraries. The binaries and library source
+files are unmodified.
+
+Python licence: LICENSE.txt
+NumPy and bundled library notices:
+Lib/site-packages/numpy-2.3.5.dist-info/LICENSE.txt
